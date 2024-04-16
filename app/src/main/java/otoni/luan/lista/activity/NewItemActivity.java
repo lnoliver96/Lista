@@ -3,6 +3,7 @@ package otoni.luan.lista.activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
@@ -30,7 +31,7 @@ public class NewItemActivity extends AppCompatActivity {
         });
 
         ImageButton imgCI = findViewById(R.id.imbCI);
-        imgCI.setOnClickListener();
+        imgCI.setOnClickListener(BaseAdapter);
 
     }
 }
