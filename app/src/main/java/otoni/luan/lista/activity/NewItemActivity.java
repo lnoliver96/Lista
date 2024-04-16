@@ -31,7 +31,7 @@ public class NewItemActivity extends AppCompatActivity {
         });
 
         ImageButton imgCI = findViewById(R.id.imbCI);
-        imgCI.setOnClickListener(BaseAdapter);
+        imgCI.setOnClickListener();
 
     }
 }
