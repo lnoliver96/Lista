@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -51,6 +53,16 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView rvItens = findViewById(R.id.rvItens);
 
         myAdapter = new MyAdapter(this,itens);
+        rvItens.setAdapter(myAdapter);
+
+        rvItens.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        rvItens.setLayoutManager(layoutManager);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvItens.getContext(), DividerItemDecoration.VERTICAL);
+        rvItens.addItemDecoration(dividerItemDecoration);
+
 
     }
     @Override
@@ -64,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 myItem.photo = data.getData();
 
                 itens.add(myItem);
+                myAdapter.notifyItemInserted(itens.size()-1);
             }
         }
     }
