@@ -41,11 +41,15 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        //Obtem o fab
         FloatingActionButton fabAddItem = findViewById(R.id.fabAddNewItem);
+        //Seta o ouvidor de cliques
         fabAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Navega  para NewItemActivity
                 Intent i = new Intent(MainActivity.this,NewItemActivity.class);
+                //intent é executado usando um metodo que assume que a Activity irá retornar dados
                 startActivityForResult(i,NEW_ITEM_REQUEST);
             }
         });
