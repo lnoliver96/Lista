@@ -112,7 +112,7 @@ public class NewItemActivity extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
         //verifica se requestcode é o que foi dado na chamada de StartActivity
         if(requestCode == PHOTO_PICKER_REQUEST){
-            //verifica se resultCode é um codigo de sucesso
+            //verifica se codigo resultou em sucesso
             if(resultCode == Activity.RESULT_OK){
                 //obtem uri da imagem
                 photoSelected = data.getData();

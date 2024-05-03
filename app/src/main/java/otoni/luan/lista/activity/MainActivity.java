@@ -54,17 +54,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Obtem o RecyclerView
         RecyclerView rvItens = findViewById(R.id.rvItens);
 
+        //Cria o MyAdapter
         myAdapter = new MyAdapter(this,itens);
+        //seta o myAdapter no recycleView
         rvItens.setAdapter(myAdapter);
 
+        //Indica que nao ha variacao de tamanho entre os itens
         rvItens.setHasFixedSize(true);
 
+        //Cria um gerenciador de layout do tipo linear
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        // seta o gerenciador de layout no recyclerView
         rvItens.setLayoutManager(layoutManager);
 
+        //cria um decorador  para a lista
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvItens.getContext(), DividerItemDecoration.VERTICAL);
+        // seta o decorador no recyclerView
         rvItens.addItemDecoration(dividerItemDecoration);
 
 
@@ -72,14 +80,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
+        //Verifica a rota
         if (requestCode == NEW_ITEM_REQUEST){
+            //verifica se codigo resultou em sucesso
             if(resultCode == Activity.RESULT_OK){
+                //cria novo objeto MyItem
                 MyItem myItem = new MyItem();
+                //Obtem os dados retornados por NewItemActivity e armazena em myItem
                 myItem.title = data.getStringExtra("title");
                 myItem.description = data.getStringExtra("description");
                 myItem.photo = data.getData();
 
+                //armazena item em uma lista de itens
                 itens.add(myItem);
+                //notifica o adapter e faz com que RecycleView atualize e exiba o novo item
                 myAdapter.notifyItemInserted(itens.size()-1);
             }
         }

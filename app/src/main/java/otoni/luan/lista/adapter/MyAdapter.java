@@ -28,18 +28,23 @@ public class MyAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //Obtem o inflador de layout
         LayoutInflater inflater = LayoutInflater.from(mainActivity);
+        //cria os elementos de interface referentes a um item e os guarda em uma View
         View v = inflater.inflate(R.layout.item_list,parent,false);
+        //O objeto view é guardado dentro de um objeto MyViewHolder
         return new MyViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+        //obtem o item que vai ser usado para preencher a UI
         MyItem myItem = itens.get(position);
 
+        //Obtem o objeto view armazenado no ViewHolder
         View v = holder.itemView;
 
+        //preenche UI com os dados do item respectivamente com foto, titulo e descricao
         ImageView imvphoto = v.findViewById(R.id.imvPhoto);
         imvphoto.setImageURI(myItem.photo);
 
@@ -52,7 +57,7 @@ public class MyAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-
+        //retorna tamanho da lista de itens
         return itens.size();
     }
 
