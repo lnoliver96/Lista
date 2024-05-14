@@ -27,7 +27,6 @@ public class NewItemActivity extends AppCompatActivity {
 
     static int PHOTO_PICKER_REQUEST = 1;
 
-    Uri photoSelected = null;
 
 
     @Override
