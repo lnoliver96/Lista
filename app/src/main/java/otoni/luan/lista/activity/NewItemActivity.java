@@ -18,15 +18,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import otoni.luan.lista.R;
+import otoni.luan.lista.model.NewItemActivityViewModel;
 
 public class NewItemActivity extends AppCompatActivity {
 
     static int PHOTO_PICKER_REQUEST = 1;
-    //variavel que irá guardar o endereco da foto, e nao a foto
-    Uri photoSelected = null;
 
+    Uri photoSelected = null;
 
 
     @Override
@@ -39,6 +40,17 @@ public class NewItemActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        //
+        NewItemActivityViewModel vm = new ViewModelProvider(this).get(NewItemActivityViewModel.class);
+        //
+        Uri selectPhotoLocation = vm.getSelectedPhotoLocation();
+        if(selectPhotoLocation != null){
+            ImageView imvphotoPreview = findViewById(R.id.imvPhotoPreview);
+            imvphotoPreview.setImageURI(selectPhotoLocation);
+        }
+
+
         //Obtem o image button
         ImageButton imgCI = findViewById(R.id.imbCI);
 
@@ -65,7 +77,7 @@ public class NewItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Verifica se o campo da foto foi preenchido pelo usuario
-                if (photoSelected== null){
+                if (photoSelected == null){
                     Toast.makeText(NewItemActivity.this,"É necessário selecionar uma imagem!", Toast.LENGTH_LONG).show();
                     return;
 
@@ -115,11 +127,18 @@ public class NewItemActivity extends AppCompatActivity {
             //verifica se codigo resultou em sucesso
             if(resultCode == Activity.RESULT_OK){
                 //obtem uri da imagem
-                photoSelected = data.getData();
+                Uri photoSelected = data.getData();
                 //obtem o imageView
                 ImageView imvphotoPreview = findViewById(R.id.imvPhotoPreview);
                 //seta o uri da foto no imageView
                 imvphotoPreview.setImageURI(photoSelected);
+
+
+                //
+                NewItemActivityViewModel vm = new ViewModelProvider(this).get(NewItemActivityViewModel.class);
+                //
+                vm.setSelectedPhotoLocation(photoSelected);
+
             }
         }
     }

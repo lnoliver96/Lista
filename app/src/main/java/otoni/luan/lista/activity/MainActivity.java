@@ -2,6 +2,8 @@ package otoni.luan.lista.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,23 +12,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import otoni.luan.lista.R;
 import otoni.luan.lista.adapter.MyAdapter;
+import otoni.luan.lista.model.MainActivityViewModel;
 import otoni.luan.lista.model.MyItem;
+import otoni.luan.lista.util.Util;
 
 public class MainActivity extends AppCompatActivity {
     static int NEW_ITEM_REQUEST =1;
 
-    List<MyItem> itens = new ArrayList<>();
 
     MyAdapter myAdapter;
     @Override
@@ -56,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Obtem o RecyclerView
         RecyclerView rvItens = findViewById(R.id.rvItens);
+
+        MainActivityViewModel vm = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        List<MyItem> itens = vm.getItens();
+
 
         //Cria o MyAdapter
         myAdapter = new MyAdapter(this,itens);
@@ -89,7 +98,19 @@ public class MainActivity extends AppCompatActivity {
                 //Obtem os dados retornados por NewItemActivity e armazena em myItem
                 myItem.title = data.getStringExtra("title");
                 myItem.description = data.getStringExtra("description");
-                myItem.photo = data.getData();
+                Uri selectedPhotoURI = data.getData();
+
+                try{
+                    Bitmap photo = Util.getBitmap(MainActivity.this, selectedPhotoURI,100,100);
+                    myItem.photo = photo;
+                }
+                catch (FileNotFoundException e){
+                    e.printStackTrace();
+                }
+
+                MainActivityViewModel vm = new ViewModelProvider(this).get(MainActivityViewModel.class);
+                List<MyItem> itens = vm.getItens();
+
 
                 //armazena item em uma lista de itens
                 itens.add(myItem);
