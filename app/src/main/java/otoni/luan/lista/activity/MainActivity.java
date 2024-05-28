@@ -32,7 +32,6 @@ import otoni.luan.lista.util.Util;
 public class MainActivity extends AppCompatActivity {
     static int NEW_ITEM_REQUEST =1;
 
-
     MyAdapter myAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
         //Obtem o RecyclerView
         RecyclerView rvItens = findViewById(R.id.rvItens);
 
+        //Obtem viewmodel
         MainActivityViewModel vm = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        //a lista de itens é obtida a partir do ViewModel
         List<MyItem> itens = vm.getItens();
 
 
@@ -100,15 +101,19 @@ public class MainActivity extends AppCompatActivity {
                 myItem.description = data.getStringExtra("description");
                 Uri selectedPhotoURI = data.getData();
 
+                //excessão dispara se o arquivo de imagem nao for encontrado
                 try{
+                    //Obtem Imagem e guarda em um Bitmap
                     Bitmap photo = Util.getBitmap(MainActivity.this, selectedPhotoURI,100,100);
+                    //guarda bitmp em um objeto myItem
                     myItem.photo = photo;
                 }
                 catch (FileNotFoundException e){
                     e.printStackTrace();
                 }
-
+                //Obtem viewmodel
                 MainActivityViewModel vm = new ViewModelProvider(this).get(MainActivityViewModel.class);
+                //a lista de itens é obtida a partir do ViewModel
                 List<MyItem> itens = vm.getItens();
 
 

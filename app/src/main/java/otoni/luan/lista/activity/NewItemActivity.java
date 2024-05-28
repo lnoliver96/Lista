@@ -40,9 +40,9 @@ public class NewItemActivity extends AppCompatActivity {
             return insets;
         });
 
-        //
+        //Obtem ViewModel referente a NewItemActivity
         NewItemActivityViewModel vm = new ViewModelProvider(this).get(NewItemActivityViewModel.class);
-        //
+        //Obtem endereco uri de dentro do viewmodel
         Uri selectPhotoLocation = vm.getSelectedPhotoLocation();
         if(selectPhotoLocation != null){
             ImageView imvphotoPreview = findViewById(R.id.imvPhotoPreview);
@@ -75,6 +75,7 @@ public class NewItemActivity extends AppCompatActivity {
         btnAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Uri photoSelected = vm.getSelectedPhotoLocation();
                 //Verifica se o campo da foto foi preenchido pelo usuario
                 if (photoSelected == null){
                     Toast.makeText(NewItemActivity.this,"É necessário selecionar uma imagem!", Toast.LENGTH_LONG).show();
@@ -133,9 +134,9 @@ public class NewItemActivity extends AppCompatActivity {
                 imvphotoPreview.setImageURI(photoSelected);
 
 
-                //
+                //obtem viewmodel
                 NewItemActivityViewModel vm = new ViewModelProvider(this).get(NewItemActivityViewModel.class);
-                //
+                //guarda endereco uri da imagem escolhida
                 vm.setSelectedPhotoLocation(photoSelected);
 
             }
